@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>NYTimes Search</title>
+</head>
+
+<body>
+        <div class="container">
+            <div class="row row1">
+                <div class="col-md-12">
+                    <h1>New York Times Search</h1>
+                </div>
+            </div>
+            <div class="row row2">
+                <div class="col-md-12">
+                    <h2>Search Parameters</h2>
+                    <form>
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Search Term</label>
+                          <br>
+                          <input id="search" type="search" class="form-control" value="">
+                        </div>
+                        <label for="exampleFormControlSelect1">Number of Records to Retrieve</label>
+                        <br>
+                        <select class="form-control" id="num-records" >
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Start Year (Optional): </label>
+                          <input id="start-year" type="input" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">End Year (Optional): </label>
+                            <input id="end-year" type="input" class="form-control" value="">
+                          </div>
+                        <div class="btn-div">
+                        <button id="submit-btn" type="submit" class="btn btn-primary">Submit</button>
+                        <button id="clear-btn" type="submit" class="btn btn-primary">Clear Results</button>
+                        </div>
+                      </form>
+                </div>
+            </div>
+            <div class="row row3">
+                <div class="col-md-12">
+                    <h2>Top Articles</h2>
+                    <div id="results"></div>
+                </div>
+            </div>
+        </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $("#submit-btn").on("click", function() {
+        event.preventDefault();
+        console.log("hi")
+    var start = ""
+    var end = ""
+    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=Ez8T8eUGmrA3D5aDw6CBEY3pLJJzG209&q="
+
+    var query = $("#search").val();
+            var count = $("#num-records").val();
+            queryURL = queryURL + query
+            console.log(queryURL)
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        .then(function(back) {
+            
+            for(i = 0; i < count; i++){
+            var article = back.response.docs[i]
+            console.log(article)
+            var art = $("<div>")
+            var link = $("<a>")
+            $(link).attr("href", article.web_url)
+            $(link).text(article.headline.main)
+            $(art).append(link);
+            $("#results").append(link)
+            }
+    });
+})
+  </script>
+</body>
+
+</html>
