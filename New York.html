@@ -61,7 +61,6 @@
   <script type="text/javascript">
     $("#submit-btn").on("click", function() {
         event.preventDefault();
-        console.log("hi")
     var start = ""
     var end = ""
     var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=Ez8T8eUGmrA3D5aDw6CBEY3pLJJzG209&q="
@@ -69,7 +68,6 @@
     var query = $("#search").val();
             var count = $("#num-records").val();
             queryURL = queryURL + query
-            console.log(queryURL)
 
       $.ajax({
         url: queryURL,
